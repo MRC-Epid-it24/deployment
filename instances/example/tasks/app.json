@@ -28,6 +28,11 @@
         "cancel_timeout": 300000
       }
     },
+    "mail": {
+      "mailer": "smtp",
+      "host": "localhost",
+      "from_address": "example@domain.com"
+    },
     "tasks": [
       {
         "name": "EXPORT_SURVEY_DATA",
