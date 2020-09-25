@@ -24,14 +24,37 @@
         "server": "",
         "username": "",
         "password": "",
-        "database": ""
+        "request_timeout": 300000,
+        "cancel_timeout": 300000
       }
     },
     "tasks": [
       {
         "name": "EXPORT_SURVEY_DATA",
-        "cron": "*/5 * * * *",
-        "params": ["survey_name"]
+        "cron": "* * * * *",
+        "params": {
+          "survey": "demo",
+          "version": "v2"
+        },
+        "db": {
+          "database": "",
+          "tables": {
+            "data": "",
+            "log": ""
+          }
+        },
+        "notify": false
+      },
+      {
+        "name": "UPLOAD_DISPLAY_NAMES",
+        "cron": "30 8,9,10,12,16 * * *",
+        "params": {
+          "survey": ""
+        },
+        "db": {
+          "database": ""
+        },
+        "notify": false
       }
     ]
   }
