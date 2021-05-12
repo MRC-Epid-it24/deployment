@@ -1,66 +1,17 @@
 {
+  "app": {
+    "directory": "/usr/share/intake24-tasks"
+  },
+  "files": {
+    "env": "../instances/{{ intake24_instance_name }}/tasks/.env",
+    "tasks": "../instances/{{ intake24_instance_name }}/tasks/tasks.json"
+  },
   "git": {
-    "repository": "",
+    "repository": "https://github.com/MRC-Epid-it24/tasks.git",
     "branch": "master",
     "ssh": {
-      "source": "../instances/{{intake24_instance_name}}/ssh/gitlab",
+      "source": "../instances/{{ intake24_instance_name }}/ssh/gitlab",
       "dest": "/home/intake24-tasks/.ssh"
     }
-  },
-  "app": {
-    "directory": "/usr/share/intake24-tasks",
-    "api": {
-      "it24": {
-        "url": "",
-        "username": "",
-        "password": ""
-      }
-    },
-    "db": {
-      "it24": {
-        "url": ""
-      },
-      "epid": {
-        "server": "",
-        "username": "",
-        "password": "",
-        "request_timeout": 300000,
-        "cancel_timeout": 300000
-      }
-    },
-    "mail": {
-      "mailer": "smtp",
-      "host": "localhost",
-      "from_address": "example@domain.com"
-    },
-    "tasks": [
-      {
-        "name": "EXPORT_SURVEY_DATA",
-        "cron": "* * * * *",
-        "params": {
-          "survey": "demo",
-          "version": "v2"
-        },
-        "db": {
-          "database": "",
-          "tables": {
-            "data": "",
-            "log": ""
-          }
-        },
-        "notify": false
-      },
-      {
-        "name": "UPLOAD_DISPLAY_NAMES",
-        "cron": "30 8,9,10,12,16 * * *",
-        "params": {
-          "survey": ""
-        },
-        "db": {
-          "database": ""
-        },
-        "notify": false
-      }
-    ]
   }
 }

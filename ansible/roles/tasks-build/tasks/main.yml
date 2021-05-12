@@ -43,7 +43,7 @@
     group: intake24
 
 - name: Checkout source from git repository
-  become_user: "intake24-tasks"
+  become_user: intake24-tasks
   git:
     repo: "{{ git.repository }}"
     dest: "{{ app.directory }}"
@@ -57,21 +57,27 @@
     state: absent
 
 - name: Install npm package dependencies
-  become_user: "intake24-tasks"
+  become_user: intake24-tasks
   command: npm install
   args:
     chdir: "{{ app.directory }}"
 
-- name: Prepare dotenv file
-  become_user: "intake24-tasks"
-  template: src=.env dest={{ app.directory }}/.env
+- name: Copy .env config file
+  become_user: intake24-tasks
+  copy:
+    src: '{{ files.env }}'
+    dest: '{{ app.directory }}/.env'
+    mode: '644'
 
-- name: Prepare tasks config file
-  become_user: "intake24-tasks"
-  template: src=tasks.ts.j2 dest={{ app.directory }}/src/config/tasks.ts
+- name: Copy tasks config file
+  become_user: intake24-tasks
+  copy:
+    src: '{{ files.tasks }}'
+    dest: '{{ app.directory }}/tasks.json'
+    mode: '644'
 
 - name: Build intake24-tasks project
-  become_user: "intake24-tasks"
+  become_user: intake24-tasks
   command: npm run production
   args:
     chdir: "{{ app.directory }}"
