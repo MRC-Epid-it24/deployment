@@ -18,23 +18,6 @@
     - git
     - nodejs
 
-- name: Create/check .ssh directory for intake24-tasks
-  file:
-    name: "{{ git.ssh.dest }}"
-    state: directory
-    owner: intake24-tasks
-    group: intake24
-    mode: 0700
-
-- name: Copy ssh config for gitlab access
-  copy:
-    src: "{{ git.ssh.source }}/"
-    dest: "{{ git.ssh.dest }}/"
-    owner: intake24-tasks
-    group: intake24
-    mode: 0600
-  when: git.ssh.dest is defined
-
 - name: Create/check application directory
   file:
     path: "{{ app.directory }}"
@@ -50,11 +33,6 @@
     version: "{{ git.branch }}"
     force: yes
     accept_hostkey: true
-
-- name: Clean ssh config for gitlab access
-  file:
-    path: "{{ git.ssh.dest }}/"
-    state: absent
 
 - name: Install npm package dependencies
   become_user: intake24-tasks
