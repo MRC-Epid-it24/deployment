@@ -73,6 +73,21 @@ Then from the root directory of the deployment project run:
 Where `(instance name)` is the name of a subdirectory in `instances` describing 
 an Intake24 instance.
 
+Note: depending on the security settings of the target host the `sudoers` file
+might not be writable. This script will not attempt to change the file's permissions.
+
+If the script fails to add the deploy user to `sudoers`, make sure the file
+(`/etc/sudoers`) is writable by the root user (`sudo chmod 600 /etc/sudoers` will 
+make it writable; don't forget to change it back to read-only with 
+`sudo chmod 400 /etc/sudoers/`).
+
+If the `chmod` command fails with an "Operation not permitted" error check the 
+file's attributes with `lsattr /etc/sudoers`. If the attribute list has an immutable
+(`i`) flag, remove it with `sudo chattr -i /etc/sudoers` and rerun the `chmod` command.
+
+Change it back (`sudo chattr +i /etc/sudoers`) after running the deploy user script
+and restoring the file's permissions to preserve the target system's security settings.
+
 #### 3.3. Delete the bootstrap configuration files
 
 At this point access using the initial (potentially root) user is no longer
