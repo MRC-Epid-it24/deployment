@@ -1,6 +1,9 @@
 # See https://github.com/ANXS/postgresql/blob/master/defaults/main.yml for more options
 
 intake24:
+  # Change to false if using existing system database. This will skip uploading 
+  # the schema snapshot and creating the default admin user.
+  init_system_database: true
   # This must be valid e-mail to change the initial password
   admin_user_email: admin@some.domain 
   system_database:

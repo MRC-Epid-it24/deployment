@@ -7,8 +7,12 @@
   register: system_snapshot_2
 
 - fail:
+    msg: "System database snapshot file does not exist. Check paths in postgres-configuration.yml."
+  when: not intake24.init_system_database and not system_snapshot_2.stat.exists
+
+- fail:
     msg: "One of the system database snapshot files does not exist. Check paths in postgres-configuration.yml."
-  when: not system_snapshot_1.stat.exists or not system_snapshot_2.stat.exists
+  when: intake24.init_system_database and (not system_snapshot_1.stat.exists or not system_snapshot_2.stat.exists)
 
 - name: Create system database
   command: /usr/bin/createdb -U {{postgres_admin_user}} --owner={{intake24.system_database.user}} {{intake24.system_database.name}}
@@ -20,17 +24,20 @@
 
 - name: Upload system database snapshot (schema)
   copy: src={{intake24.system_database.schema_snapshot_path}} dest=/home/deploy/intake24_system_schema.pgcustom
+  when: intake24.init_system_database
 
-- name: Upload system database snapshot (constants)
+- name: Upload system database snapshot (constants/data)
   copy: src={{intake24.system_database.data_snapshot_path}} dest=/home/deploy/intake24_system_data.pgcustom
 
 - name: Restore database snapshot (schema)
   command: /usr/bin/pg_restore -U {{postgres_admin_user}} -n public --no-owner --no-acl --role={{intake24.system_database.user}} --dbname {{intake24.system_database.name}} /home/deploy/intake24_system_schema.pgcustom
+  when: intake24.init_system_database
 
-- name: Restore database snapshot (constants)
+- name: Restore database snapshot (constants/data)
   command: /usr/bin/pg_restore -U {{postgres_admin_user}} -n public --no-owner --no-acl --role={{intake24.system_database.user}} --dbname {{intake24.system_database.name}} /home/deploy/intake24_system_data.pgcustom
 
 - name: Create default Intake24 admin user
+  when: intake24.init_system_database
   command: /usr/bin/psql -U {{postgres_admin_user}} -d {{intake24.system_database.name}} -c "{{item}}"
   with_items:
   - >
@@ -38,13 +45,18 @@
      INSERT INTO user_passwords (user_id, password_hash, password_salt, password_hasher) VALUES (1, 'hU+SnrQ/+uAxfPyvpqCw9vixHzwC2Ph/Zqasd6CLgrE=', 'DWXIWvxIVfX1vBYfASmy0A==','shiro-sha256');
      INSERT INTO user_roles(user_id, role) VALUES (1, 'superuser');
 
-- name: Delete snapshots
+- name: Delete system schema snapshot
+  when: intake24.init_system_database
   file:
     path: "{{item}}"
   with_items:
     - /home/deploy/intake24_system_schema.pgcustom
-    - /home/deploy/intake24_system_data.pgcustom
 
+- name: Delete system data snapshot
+  file:
+    path: "{{item}}"
+  with_items:
+    - /home/deploy/intake24_system_data.pgcustom
 
 ###
 
