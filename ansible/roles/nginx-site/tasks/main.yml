@@ -7,10 +7,10 @@
   when: nginx_site.copy_ssl_certificate
 
 - name: Copy {{ nginx_site.host_name }} nginx site config
-  copy: src={{ nginx_site.config_file }} dest=/etc/nginx/sites-available/{{nginx_site.host_name}}
+  copy: src={{ nginx_site.config_file }} dest=/etc/nginx/sites-available/{{ nginx_site.file_name | default(nginx_site.host_name) }}
 
 - name: Enable {{nginx_site.host_name}} site
-  file: src=/etc/nginx/sites-available/{{nginx_site.host_name}} dest=/etc/nginx/sites-enabled/{{nginx_site.host_name}} state=link
+  file: src=/etc/nginx/sites-available/{{ nginx_site.file_name | default(nginx_site.host_name) }} dest=/etc/nginx/sites-enabled/{{ nginx_site.file_name | default(nginx_site.host_name) }} state=link
 
 - name: Restart nginx
   service: name=nginx state=restarted
