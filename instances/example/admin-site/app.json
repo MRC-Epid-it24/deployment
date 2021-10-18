@@ -18,6 +18,8 @@
       "enabled": true,
       "site_key": ""
     },
-    "hide_food_database": false
+    "hide_food_database": false,
+    "additionalImageSources": [],
+    "additionalXHRImageSources": []
   }
 }
