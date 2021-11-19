@@ -87,7 +87,7 @@
 - name: Restore food database snapshot
   command: /usr/bin/pg_restore -U {{postgres_admin_user}} -n public --no-owner --no-acl --role={{intake24.food_database.user}} --dbname {{intake24.food_database.name}} /home/deploy/intake24_foods_snapshot.pgcustom
   when: intake24.food_database.name is defined
-  
+
 - name: Delete snapshots
   file:
     path: "{{item}}"

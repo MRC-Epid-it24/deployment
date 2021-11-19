@@ -1,5 +1,6 @@
 ---
 - hosts: database
+  gather_facts: True
   roles:
     - { role: ANXS.postgresql,  become: true }
     - create-databases

@@ -57,12 +57,6 @@
   args:
     chdir: "{{ app.directory }}"
 
-- name: Create Grunt build config
-  become_user: "{{ app.name }}"
-  template:
-    src: config.json.j2
-    dest: "{{ app.directory }}/config.json"
-
 - name: Build Intake24 admin tool
   become_user: "{{ app.name }}"
   command: npm run build
