@@ -45,7 +45,7 @@
   copy:
     src: '{{ files.env }}'
     dest: '{{ app.directory }}/.env'
-    mode: '644'
+    mode: '600'
 
 - name: Copy tasks config file
   become_user: intake24-tasks
