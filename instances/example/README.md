@@ -304,6 +304,11 @@ Default setup uses AWS S3 storage to access image database. Refer to
 [Using local portion size image database](https://github.com/intake24/api-server/wiki/Using-local-portion-size-image-database)
 to serve image files locally.
 
+If you ant to use AWS CloudFront for serving images to users in addition to S3 modify accordinally the CloudFront Section.
+- Set `intake24.images.CloudFront.imageUrl` to the publicly accesible CloundFront distribution address, like: `dshat1pur3ei4j74.cloudfront.net`
+- Set `intake24.images.CloudFront.pathPrefix` to the S3 folder with images (similar to `intake24.images.S3Storage.pathPrefix`)
+- Change `play.modules.enabled +="modules.S3StorageModule"` or `play.modules.enabled +="modules.S3StorageReadOnlyModule"` to `play.modules.enabled += "modules.CloudFrontS3StorageModule"`
+
 ##### 5.5.4.2 API v2 server
 
 Edit `instances/(instance name)/api-server-v2/service.conf` and change the 
