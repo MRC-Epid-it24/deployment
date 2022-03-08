@@ -12,11 +12,8 @@
   apt:
     update-cache: yes
     cache_valid_time: 86400
-    name: "{{ item }}"
+    name: ['git', 'nodejs']
     state: present
-  with_items:
-    - git
-    - nodejs
 
 - name: Create/check application directory
   file:
