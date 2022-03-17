@@ -53,7 +53,7 @@
 
 - name: Build intake24-tasks project
   become_user: intake24-tasks
-  command: npm run production
+  command: npm run build
   args:
     chdir: "{{ app.directory }}"
 
