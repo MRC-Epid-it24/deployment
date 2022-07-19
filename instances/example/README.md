@@ -288,6 +288,7 @@ the survey site (e.g. `https://intake24.co.uk`)
 to the internal IP address of the short URL service
 - (Optional) If using Twilio for SMS notifications, fill out the Twilio account 
 details in `twilio`
+- (Optional) Adjust `intake24.security.urlAuthTokenLength` according to the necessary Security requirements. By default system reverts to 9 if not set.
 
 Edit `instances/(instance name)/api-server/nginx` and 
 `instances/(instance name)/api-server/nginx.json` and update the server name.
