@@ -504,6 +504,7 @@ In the same file:
 - Set `intake24.internalApiBaseUrl` to the API server's host name or IP address reachable from the internal network. 
 - Set `intake24.externalApiBaseUrl` to the API server's public host name or IP address reachable from the Internet.
 - (Optional) Set `intake24.ga.trackingCode` to Google Analytics property code
+- (Optional) Change `intake24.survey.displayCookieConsent` to switch ON or OFF the pop-up consent form for Cookie usage. 
 
 Edit `instances/(instance name)/survey-site/play-app.json` and change the following
 values:
