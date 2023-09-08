@@ -31,9 +31,12 @@
     force: yes
     accept_hostkey: true
 
-- name: Install npm package dependencies
+- name: Install pnpm to latest
+  command: npm install -g pnpm
+
+- name: Install package dependencies
   become_user: intake24-tasks
-  command: npm install
+  command: pnpm install
   args:
     chdir: "{{ app.directory }}"
 
@@ -53,7 +56,7 @@
 
 - name: Build intake24-tasks project
   become_user: intake24-tasks
-  command: npm run build
+  command: pnpm build
   args:
     chdir: "{{ app.directory }}"
 
