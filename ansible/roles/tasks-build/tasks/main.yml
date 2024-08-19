@@ -32,7 +32,10 @@
     accept_hostkey: true
 
 - name: Install pnpm to latest
-  command: npm install -g pnpm
+  become_user: intake24-tasks
+  command: corepack install
+  args:
+    chdir: "{{ app.directory }}"
 
 - name: Install package dependencies
   become_user: intake24-tasks
