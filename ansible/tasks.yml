@@ -1,6 +1,0 @@
----
-- hosts: tasks
-  remote_user: deploy
-  become: true
-  roles:
-    - tasks-build
